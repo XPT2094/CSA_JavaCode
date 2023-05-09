@@ -22,7 +22,7 @@ public class CSA_SecondWork {
         System.out.println(getSum("829579081298345918257","8823897418920918472193"));
         System.out.println("<-------第五题------->");
         //TODO:在此编写第五题测试代码
-        System.out.println("最长公共前缀"+longestCommonPrefix(new String[]{"abcd","abs","abipsd","abook"}));
+        System.out.println("最长公共前缀"+longestCommonPrefix(new String[]{"abcd","abc","abd","ab"}));
     }
     //第三题格式要求,在TODO部分实现代码
     public static String getSum(String a,String b){
