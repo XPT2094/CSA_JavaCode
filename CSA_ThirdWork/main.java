@@ -46,25 +46,26 @@ public class main {
         }
         System.out.println("这"+count+"个数字的平均值是："+sum/count);
         System.out.println("<-------第四题------->");
-        System.out.println("类已写，想实现的功能还有点问题。。。");
-//        MyDate date = new MyDate() ;
-//        Employee e = new Employee();
-//        System.out.print("请输入姓名：");
-//        String name = in.next();
-//        System.out.print("请输入电话号码：");
-//        int phone = in.nextInt();
-//        System.out.print("请输入生日年份： ");
-//        date.setYear(in.nextInt());
-//        date.earnings();
-//        System.out.print("请输入生日月份： ");
-//        date.setMonth(in.nextInt());
-//        date.earnings();
-//        System.out.print("请输入生日日期： ");
-//        date.setDay(in.nextInt());
-//        date.earnings();
-//        e.Employee(name,phone,date);
-//         date.MyDate();
-//        e.toString();
+
+       MyDate date = new MyDate() ;
+        Employee e = new Employee();
+     System.out.print("请输入姓名：");
+        String name = in.next();
+        System.out.print("请输入电话号码：");
+        int phone = in.nextInt();
+       System.out.print("请输入生日年份： ");
+        date.setYear(in.nextInt());
+
+        System.out.print("请输入生日月份： ");
+        date.setMonth(in.nextInt());
+
+       System.out.print("请输入生日日期： ");
+       date.setDay(in.nextInt());
+
+        e.Employee(name,phone,date);
+
+       System.out.println(e);
+
         System.out.println("<-------第五题------->");
         String s = "abcde";
         String[] words = {"a","bb","acd","ace"};
@@ -170,12 +171,13 @@ class checkNum{
         this.birthday = birthday;
     }
 
-      void  earnings(){};
+    static   void  earnings(){};
    public  String toString(){
-        return name + num + birthday;
+        return "姓名："+name +"\n"+"电话号码："+ num
+                +"\n"+"生日："+ birthday;
     }
 }
-class MyDate extends Employee{
+class MyDate {
 
     int year;
    int month;
@@ -190,20 +192,9 @@ class MyDate extends Employee{
         this.day = day;
     }
 
-    void earnings(){
-        int n = 0 ;
-        if((year) >  2023){
-            System.out.println("年份输入错误！");
-        } else if ((month)>12||(month)<0) {
-            System.out.println("月份输入错误！");
-        } else if ((day)>31||(day)<1) {
-            System.out.println("日期输入错误！");
-        }else n = 2;
-     };
-   public String  MyDate(){
 
-        return this.year+"."+this.month+"."+this.day;
-
+    public String toString() {
+        return year + "-" + month + "-" + day;
     }
 }
  class panDuan{
