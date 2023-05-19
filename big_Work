@@ -1,0 +1,212 @@
+package CSA_bigWork;
+import java.io.*;
+import java.util.Scanner;
+
+
+public class 学生信息管理库 {
+    public static void main(String[] args) throws IOException {
+        String filePath = "D:/学生信息管理系统/学生信息管理系统.txt";
+        File file = new File(filePath);
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        int count = 0;
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (!line.trim().equals("")) {
+                count++;
+            }
+        }
+
+        System.out.println("输入想实现功能的编号：1、查询信息； 2 、输入数据 ； 3、查看全部信息");
+        Scanner in = new Scanner(System.in);
+        int chioce = in.nextInt();
+        switch (chioce) {
+            case 1:
+                if (file.length() == 0) {
+                    System.out.println("该系统为空！请插入学生信息后再查询！");
+                } else {
+                    String 查询条件;
+
+                    String student[][] = new String[count / 6][6];
+
+                    System.out.println("输入查询的条件（可以是学号、姓名等等）：");
+                    查询条件 = in.next();
+//                    int  xx = 0;
+//                    while ((line = reader.readLine()) != null) {
+//
+//                        if (line.trim().equals("  ")) { // 每个学生信息以两个空格结束
+//                            xx++; // 读取下一个学生信息
+//                            continue;
+//                        }
+//                        student[xx][count % 6] = line;
+//                    }
+                    for (int x = 0; x < count / 6; x++) {
+                        for (int y = 0; y < 6; y++) {
+                            String line2 = reader.readLine();
+                            if (line2 != null && !line2.trim().equals("")) {
+                                student[x][y] = line2;
+                            }
+                        }
+                    }
+                    for (int x = 0; x < count / 6; x++) {
+                        int flag = 0;
+                        for (int y = 0; y < 6; y++) {
+                            if (student[x][y] != null && student[x][y].endsWith(查询条件)) {
+                                flag = 1;
+                                break;
+                            }
+                        }
+                        if (flag == 1) {
+                            System.out.println(student[x][0] + "\n" + student[x][1] + "\n"
+                                    + student[x][2] + "\n" + student[x][3] + "\n"
+                                    + student[x][4] + "\n" + student[x][5] + "\n");
+                            System.out.println();
+                        }
+                    }
+
+                    reader.close();
+                    System.out.println("查询完成！");
+
+
+                }
+                break;
+            case 2:
+                try {
+                    FileWriter writer = new FileWriter(file);
+                    if (file.length() == 0) {
+                        System.out.println("请输入要输入的信息数(一次性输入完)：");
+                        int x = in.nextInt();
+                        for (int i = 0; i < x; i++) {
+
+                            int 序号 = i + 1;
+                            writer.write("序号：" + 序号);
+                            writer.write("\n");
+                            System.out.println("序号为 " + 序号);
+                            String 姓名信息 = new String();
+                            System.out.println("姓名：");
+                            姓名信息 = in.next();
+                            writer.write("姓名：" + 姓名信息);
+                            writer.write("\n");
+                            String 学号信息 = new String();
+                            System.out.println("学号：");
+
+                            学号信息 = in.next();
+                            writer.write("学号：" + 学号信息);
+                            writer.write("\n");
+                            System.out.println("性别：");
+                            String 性别信息 = new String();
+                            性别信息 = in.next();
+                            writer.write("性别：" + 性别信息);
+                            writer.write("\n");
+                            System.out.println("电话：");
+                            String 电话信息 = new String();
+                            电话信息 = in.next();
+                            writer.write("电话：" + 电话信息);
+                            writer.write("\n");
+                            System.out.println("地址：");
+                            String 居住地信息 = new String();
+                            居住地信息 = in.next();
+                            writer.write("地址：" + 居住地信息);
+
+                            writer.write("\n");
+
+
+                        }
+                        System.out.println("已成功输入 " + x + " 条学生信息！");
+                    } else {
+                        System.out.println("信息库已经创立！");
+                    }
+                    writer.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 3:
+
+                if (file.length() == 0) {
+                    System.out.println("文件中没有学生信息！");
+                } else {
+                    try {
+                        System.out.println("开始读取文件内容...");
+                        String line3 = new String();
+                        for (int x = 0; x < count ; x++) {
+
+                                line3 = reader.readLine();
+                                if (line3 != null &&!line3.trim().equals("")) {
+                                    System.out.println(line3);
+                                }
+
+                            System.out.println();
+                        }
+                        System.out.println("读取文件内容结束。");
+                    } catch (IOException e) {
+                        System.out.println("读取文件时发生异常：" + e.getMessage());
+                    } finally {
+                        try {
+                            reader.close();
+                            System.out.println("reader对象关闭成功。");
+                        } catch (IOException e) {
+                            System.out.println("关闭reader对象时发生异常：" + e.getMessage());
+                        }
+                    }
+                    System.out.println("全部信息打印完成！");
+                }
+                in.close();
+        }
+//        try(FileReader in = new FileReader("D:\\学生信息管理系统");
+//        FileWriter out = new FileWriter("D:\\学生信息管理系统")){
+//            if(in.read()== -1){
+//                System.out.println("学生信息管理库为空！"+"\n"+"查询不到任何学生信息！");
+//            }
+//            Scanner n = new Scanner(System.in);
+//            System.out.println("输入想实现功能的编号：1、查询信息； 2 、查看全部信息 ； 3、插入信息");
+//
+//
+//        }catch (FileNotFoundException e){
+//            e.printStackTrace();
+//        }catch (IOException e){
+//            e.printStackTrace();
+//        }
+//    }
+
+    }}
+
+
+
+//    class 学生信息 {
+//        private String 姓名;
+//        private String 学号;
+//        private String 性别;
+//        private String 电话;
+//        private String 居住地;
+//        private String 元组[] = new String[5];
+//
+//        public void set姓名(String 姓名) {
+//            元组[0] = 姓名;
+//        }
+//
+//        public void set学号(String 学号) {
+//            元组[1] = 学号;
+//        }
+//
+//        public void set性别(String 性别) {
+//            元组[2] = 性别;
+//        }
+//
+//        public void set电话(String 电话) {
+//            元组[3] = 电话;
+//        }
+//
+//        public void set居住地(String 居住地) {
+//            元组[4] = 居住地;
+//        }
+//
+//        public String 返回输入信息() {
+//            return "即将输入的学生信息：" + "\n" + "姓名：" + 元组[0] + "\n"
+//                    + "学号：" + 元组[1] + "\n" + "学号：" + 元组[1] + "\n" + "性别：" + 元组[2] + "\n" + "电话：" + 元组[3] + "\n" + "居住地：" + 元组[4] + "\n"
+//                    + "如有错误的地方，插入后可以选择修改功能。";
+//        }
+//
+//    }
+
+
