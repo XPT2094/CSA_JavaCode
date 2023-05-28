@@ -1,0 +1,90 @@
+package CSA_FourthWork;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+
+public class 作业 {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("<-------第一题------->");
+        System.out.print("输入：x = ");
+        int x = in.nextInt();
+        reverseInteger reverseInteger = new reverseInteger();
+        System.out.print("输出：" + reverseInteger.reverse(x));
+        System.out.println();
+        System.out.println("<-------第二题------->");
+        System.out.print("输入阶数：");
+        int c = in.nextInt();
+        System.out.println("共有 "+ClimbStairs.climbStairs(c)+" 种方法");
+        System.out.println("<-------第三题------->");
+        System.out.println("输入要进行打印子集的个数：");
+        int count = in.nextInt();
+        int[] nums = new  int[count];
+        for (int i = 0; i < count; i++) {
+            System.out.println("第"+(i+1)+"个数");
+            nums[i] = in.nextInt();
+        }
+        List<List<Integer>> result = Subsets.subsets(nums);
+        System.out.println(result);
+
+    }
+}
+class reverseInteger{
+    public int reverse(int x) {
+        int saved = 0;
+        while (x != 0) {
+            int n = x % 10;
+            x /= 10;
+            if (saved > Integer.MAX_VALUE / 10 || (saved == Integer.MAX_VALUE / 10 && n > 7)) {
+                return 0;
+            }
+            if (saved < Integer.MIN_VALUE / 10 || (saved == Integer.MIN_VALUE / 10 && n < -8)) {
+                return 0;
+            }
+            saved = saved * 10 + n;
+        }
+      if(x < 0 ){
+          saved = saved*(-1);
+      }
+        return saved;
+    }
+    }
+ class ClimbStairs {
+    public static int climbStairs(int n) {
+        if (n <= 3) {
+            return n;
+        }
+        int[] d = new int[n+1];
+        d[1] = 1;
+        d[2] = 2;
+
+        for (int i = 3; i <= n; i++) {
+            d[i] = d[i-1] + d[i-2];
+        }
+        return d[n];
+    }
+
+
+}
+
+ class Subsets {
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> subset = new ArrayList<>();
+        backtrack(nums, result, subset, 0);
+        return result;
+    }
+
+    private static void backtrack(int[] nums, List<List<Integer>> result, List<Integer> subset, int index) {
+        result.add(new ArrayList<>(subset));
+
+        for (int i = index; i < nums.length; i++) {
+            subset.add(nums[i]);
+            backtrack(nums, result, subset, i + 1);
+            subset.remove(subset.size() - 1);
+        }
+    }
+
+
+}
+
