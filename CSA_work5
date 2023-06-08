@@ -1,0 +1,78 @@
+package CSA_work5;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+ class Main {
+     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+     static final String DB_URL = "jdbc:mysql://localhost:3306/CSA_mysqlText";
+     static final String USER = "root";
+     static final String PASS = "root123456";
+     public static void main(String[] args) {
+         Connection conn = null;
+         Statement stmt = null;
+
+         try {
+             Class.forName(JDBC_DRIVER);
+             System.out.println("开始连接数据库...");
+             conn = DriverManager.getConnection(DB_URL, USER, PASS);
+             System.out.println("第一题的效果");
+             stmt = conn.createStatement();
+             String sql = "INSERT INTO student (SNO, Name, Age, College) " +
+                     "VALUES ('s001', '老大', 20, '计算机学院'), " +
+                     "('s002', '老二', 19, '计算机学院'), " +
+                     "('s003', '老三', 18, '计算机学院'), " +
+                     "('s004', '老四', 17, '计算机学院')";
+             stmt.executeUpdate(sql);
+
+             System.out.println("第二题的效果");
+             sql = "SELECT * FROM student";
+             ResultSet rs = stmt.executeQuery(sql);
+             while (rs.next()) {
+                 String sno = rs.getString("SNO");
+                 String name = rs.getString("Name");
+                 int age = rs.getInt("Age");
+                 String college = rs.getString("College");
+                 System.out.println("SNO: " + sno + ", Name: " + name + ", Age: " + age + ", College: " + college);
+             }
+
+             System.out.println("第三题的效果");
+             sql = "DELETE FROM student WHERE SNO='s004'";
+             stmt.executeUpdate(sql);
+
+             System.out.println("第四题的效果");
+             sql = "SELECT * FROM student WHERE SNO='s003'";
+             rs = stmt.executeQuery(sql);
+             if (rs.next()) {
+                 String sno = rs.getString("SNO");
+                 String name = rs.getString("Name");
+                 int age = rs.getInt("Age");
+                 String college = rs.getString("College");
+                 System.out.println("SNO: " + sno + ", Name: " + name + ", Age: " + age + ", College: " + college);
+             }
+
+             System.out.println("第五题的效果");
+             sql = "UPDATE student SET College='通信学院' WHERE SNO='s001'";
+             stmt.executeUpdate(sql);
+             rs.close();
+             stmt.close();
+             conn.close();
+         } catch (SQLException se) {
+             se.printStackTrace();
+         } catch (Exception e) {
+             e.printStackTrace();
+         } finally {
+             try {
+                 if (stmt != null) stmt.close();
+             } catch (SQLException se2) {
+             }
+             try {
+                 if (conn != null) conn.close();
+             } catch (SQLException se) {
+                 se.printStackTrace();
+             }
+         }
+         System.out.println("JDBC结束。");
+     }
+     }
